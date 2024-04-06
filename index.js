@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
-const WebSocket = require('ws');
+const http = require('http'); // Import the HTTP module
+const WebSocket = require('ws'); // Import the WebSocket module
 
 const app = express();
 const PORT = 5000;
@@ -12,7 +13,8 @@ app.get("/", async (req, res) => {
   res.json('Hello World');
 });
 
-const wss = new WebSocket.Server({ noServer: true }); // Create a WebSocket server without an HTTP server
+const server = http.createServer(app); // Create an HTTP server
+const wss = new WebSocket.Server({ server }); // Create a WebSocket server
 
 let likes = 0;
 
@@ -32,13 +34,6 @@ wss.on('connection', (ws) => {
   });
 });
 
-const server = app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server running at PORT ${PORT}`);
-});
-
-// Upgrade the HTTP server to support WebSocket
-server.on('upgrade', (request, socket, head) => {
-  wss.handleUpgrade(request, socket, head, (ws) => {
-    wss.emit('connection', ws, request);
-  });
 });
