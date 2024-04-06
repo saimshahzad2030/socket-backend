@@ -27,3 +27,4 @@ app.get("/",async (req, res) => {
 });
 
 // io.listen(PORT, () => console.log(`Server runing at PORT ${PORT}`));
+module.exports = {io}
