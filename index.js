@@ -95,7 +95,9 @@ wss.on('connection', function connection(ws) {
     }
   });
 });
-
+app.get('/',async(req,res)=>{
+  res.send('Hello world')
+})
 server.listen(PORT, () => {
   console.log(`Server running at PORT ${PORT}`);
 });
