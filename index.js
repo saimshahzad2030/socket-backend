@@ -5,7 +5,9 @@ const app = express()
 const PORT = 5000
 app.use(cors())
 app.use(express.json())
-
+app.get("/",async (req, res) => {
+  res.json('Hello World');
+});
 const server = app.listen(PORT, () => {
   console.log(`Server running at PORT ${PORT}`);
 });
@@ -22,9 +24,7 @@ io.on('connect',(socket)=>{
     socket.broadcast.emit('likeUpdate',likes)
   })
 })
-app.get("/",async (req, res) => {
-  res.json('Hello World');
-});
+
 
 // io.listen(PORT, () => console.log(`Server runing at PORT ${PORT}`));
 module.exports = {io}
